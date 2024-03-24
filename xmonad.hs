@@ -3,8 +3,8 @@
 -------------------------------------------------------------------------------
 	-- Base
 import XMonad
-import Data.Monoid(mempty)
 import System.Exit
+import Data.Monoid(mempty)
 
 	-- Keyboard
 import Graphics.X11.ExtraTypes.XF86
@@ -17,14 +17,15 @@ import XMonad.Layout.Spacing
 import Data.Maybe (fromJust)
 
 	-- Hooks
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 
 	-- Utilities
+import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
-import XMonad.Util.EZConfig (additionalKeys)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -58,7 +59,7 @@ myModMask :: KeyMask
 myModMask       = mod4Mask
 
 -- Workspaces
-myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+myWorkspaces = ["Programming", "Web Browser", "File Explorer", "Music", "Videos", "Games"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..]
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -310,8 +311,8 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 
 main = do
-  xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc"  
-  xmonad $ docks $ defaults {
+  xmproc <- spawnPipe "polybar mybar"  
+  xmonad $ docks $ ewmh $ defaults {
 	 logHook = dynamicLogWithPP $ def { 
 		  ppOutput = hPutStrLn xmproc  
 		, ppCurrent = xmobarColor textColor "" . wrap
