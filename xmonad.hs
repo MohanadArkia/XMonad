@@ -132,10 +132,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_c     ), kill)
 
     -- Flip screen
-    , ((mod1Mask .|. mod4Mask, xK_Left), spawn "$HOME/Documents/scripts/FlipScreen/flip.sh left")
-    , ((mod1Mask .|. mod4Mask, xK_Right), spawn "$HOME/Documents/scripts/FlipScreen/flip.sh right")
-    , ((mod1Mask .|. mod4Mask, xK_Down), spawn "$HOME/Documents/scripts/FlipScreen/flip.sh inverted")
-    , ((mod1Mask .|. mod4Mask, xK_Up), spawn "$HOME/Documents/scripts/FlipScreen/flip.sh normal")
+    , ((mod1Mask .|. mod4Mask, xK_Left), spawn "$HOME/Documents/scripts/flipScreen/flip.sh left")
+    , ((mod1Mask .|. mod4Mask, xK_Right), spawn "$HOME/Documents/scripts/flipScreen/flip.sh right")
+    , ((mod1Mask .|. mod4Mask, xK_Down), spawn "$HOME/Documents/scripts/flipScreen/flip.sh inverted")
+    , ((mod1Mask .|. mod4Mask, xK_Up), spawn "$HOME/Documents/scripts/flipScreen/flip.sh normal")
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
