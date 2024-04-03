@@ -53,13 +53,14 @@ myClickJustFocuses = False
 -- Border width
 myBorderWidth :: Dimension
 myBorderWidth   = 2
+setBorderWidth :: Dimension -> Window -> X ()
 
 -- Mod Key
 myModMask :: KeyMask
 myModMask       = mod4Mask
 
 -- Workspaces
-myWorkspaces = ["Programming", "Web Browser", "File Explorer", "Music", "Videos", "Games"]
+myWorkspaces = [" Programming ", " Web Browser ", " File Explorer ", " Music ", " Videos ", " Games "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..]
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -120,10 +121,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_f     ), toggleFullscreen)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    --, ((modm,               xK_p     ), spawn "dmenu_run")
     
     -- launch rofi
-    --, ((modm,               xK_p     ), spawn "rofi -show drun")
+    , ((modm,               xK_p     ), spawn "rofi -show drun")
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -311,7 +312,7 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 
 main = do
-  xmproc <- spawnPipe "polybar mybar"  
+  xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc"  
   xmonad $ docks $ ewmh $ defaults {
 	 logHook = dynamicLogWithPP $ def { 
 		  ppOutput = hPutStrLn xmproc  
@@ -337,13 +338,21 @@ main = do
 	}
   }  
 
+setBorderWidth borderWidth width = withDisplay $ \display -> io $ setWindowBorderWidth display width borderWidth
+
 toggleFullscreen :: X ()
 toggleFullscreen =
   withWindowSet $ \ws ->
-  withFocused $ \w -> do
-        let fullRect = W.RationalRect 0 0 1 1
-        let isFullFloat = w `M.lookup` W.floating ws == Just fullRect
-        windows $ if isFullFloat then W.sink w else W.float w fullRect
+    withFocused $ \w -> do
+      let fullRect = W.RationalRect 0 0 1.006 1.006
+      let isFullFloat = w `M.lookup` W.floating ws == Just fullRect
+      if isFullFloat
+        then do
+          windows $ W.sink w
+          setBorderWidth myBorderWidth w
+        else do
+          windows $ W.float w fullRect
+          setBorderWidth 0 w
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will

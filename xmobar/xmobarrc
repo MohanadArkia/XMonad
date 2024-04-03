@@ -10,19 +10,19 @@ Config { font            = "Ubuntu Bold 10"
        , hideOnStart  = False
        , allDesktops  = True
        , persistent   = True
-       , iconRoot     = ".xmonad/xpm/"
+       , iconRoot     = ".xmonad/xpm/"  -- default: "."
        , commands = [
                         -- Echos a "messages" icon in front of the notify-log output.
                       Run Com "echo" ["<fn=3>\xf099</fn>"] "messages" 3600
 
                         -- Cpu usage in percent
-                    , Run Cpu ["-t", "<fn=2>\xf108</fn>  CPU: (<total>%)","-H","50","--high","red"] 20
+                    , Run Cpu ["-t", "<fn=2>\xf2db</fn>  CPU: (<total>%)","-H","50","--high","red"] 20
 
-                        -- Ram used in percent
-                    , Run Memory ["-t", "<fn=2>\xf233</fn>  RAM: (<usedratio>%)"] 20
+                        -- Ram used number and percent
+                    , Run Memory ["-t", "<fn=2>\xf1c0</fn>  RAM: (<usedratio>%)"] 20
 
                         -- Disk space free
-                    , Run DiskU [("/", "<fn=2>\xf0c7</fn>  HDD: <free> free")] [] 60
+                    , Run DiskU [("/", "<fn=2>\xf0a0</fn>  HDD: <free> free")] [] 60
 
                         -- Echos an "up arrow" icon in front of the uptime output.
                     , Run Com "echo" ["<fn=2>\xf0aa</fn>"] "uparrow" 3600
@@ -42,6 +42,6 @@ Config { font            = "Ubuntu Bold 10"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader% }{<box type=Bottom width=2 mb=2 color=#ecbe7b><fc=#ecbe7b><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#ff6c6b><fc=#ff6c6b><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#a9a1e1><fc=#a9a1e1>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#98be65><fc=#98be65>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#da8548><fc=#da8548>%baticon%  %battery%</fc></box>    <box type=Bottom width=2 mb=2 color=#46d9ff><fc=#46d9ff><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box>                        "
+       , template = "%UnsafeStdinReader% }{<box type=Bottom width=2 mb=2 color=#ecbe7b><fc=#ecbe7b><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#ff6c6b><fc=#ff6c6b><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#a9a1e1><fc=#a9a1e1>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#98be65><fc=#98be65>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#da8548><fc=#da8548>%baticon%  %battery%</fc></box>    <box type=Bottom width=2 mb=2 color=#46d9ff><fc=#46d9ff><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box>                        "
        }
 
